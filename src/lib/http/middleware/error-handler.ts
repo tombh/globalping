@@ -29,5 +29,7 @@ export const errorHandlerMw = async (ctx: Context, next: Next) => {
 				type: 'api_error',
 			},
 		};
+	} finally {
+		appsignal.tracer().rootSpan().set('status_code', ctx.status).close();
 	}
 };
