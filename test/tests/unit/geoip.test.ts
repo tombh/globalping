@@ -260,7 +260,7 @@ describe('geoip service', () => {
 
 			mockFs({
 				config: {
-					'whitelist-ips.txt': `${MOCK_IP}`,
+					'whitelist-ips.txt': `${MOCK_IP}\n127.0.0.1\r1.1.1.1`,
 				},
 			});
 
