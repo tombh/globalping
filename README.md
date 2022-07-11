@@ -186,6 +186,22 @@ API uses 3000 port by default. This can be overridden by `PORT` environment vari
 that connects to the API will get an IP address from the list of predefined "real" addresses.
 
 1. clone repository
-2. `docker-compose up -d` - run redis
-3. `npm install && npm run init:hooks && npm run build`
-4. `npm run dev`
+2. `docker-compose up` to run redis
+3. `npm install && npm run init:hooks`
+4. `npm run watch`
+5. `npm run dev`
+
+There is a pre-commit hook, to avoid its errors run `xo --fix` before committing
+
+### Useful commands
+```
+# Request measurement
+curl 'http://localhost:3000/v1/measurements' \
+    -X POST -H 'content-type: application/json' \
+    --data-raw '{"measurement":{"type":"ping","target":"google.com"},"locations":[],"limit":1}'
+```
+
+```
+# View measurement
+curl 'http://localhost:3000/v1/measurements/<ID returned from reuqest command>'
+```

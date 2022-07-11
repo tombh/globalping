@@ -1,3 +1,4 @@
+import process from 'node:process';
 import type {Socket} from 'socket.io';
 import type {Probe} from '../../probe/types.js';
 import {handleMeasurementAck} from '../../measurement/handler/ack.js';
@@ -23,8 +24,16 @@ io
 		await verifyIpLimit(socket);
 
 		const probe = socket.data['probe'] as Probe;
+		if (process.env['FAKE_PROBE_IP']) {
+			probe.location.city += ' (fake sample)';
+		}
+
 		socket.emit('api:connect:location', probe.location);
-		logger.info(`ws client ${socket.id} connected from ${probe.location.city}, ${probe.location.country} [${probe.ipAddress} - ${probe.location.network}]`);
+
+		logger.info(
+			`ws client ${socket.id} connected from ${probe.location.city}, `
+			+ `${probe.location.country} [${probe.ipAddress} - ${probe.location.network}]`,
+		);
 
 		// Handlers
 		socket.on('probe:status:ready', handleStatusReady(probe));

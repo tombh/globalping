@@ -25,7 +25,7 @@ export const initWsServer = async () => {
 		transports: ['websocket'],
 		serveClient: false,
 		pingInterval: 10_000,
-		pingTimeout: 4000,
+		pingTimeout: 15_000,
 	});
 
 	io.adapter(createAdapter(pubClient, subClient));
